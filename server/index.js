@@ -4,22 +4,28 @@ import cors from "cors";
 import cookieParser from "cookie-parser"; 
 import mongoose from "mongoose"; 
 import authRoutes from "./routes/AuthRoutes.js";
+import contactsRoutes from "./routes/ContactRoutes.js";
+// import { userInfo } from "os";
+// import { create } from "domain"
+
+// This loads variables from a .env file into process.env
 dotenv.config();
+// app: Initializes an Express application.
 const app = express();
 const port = process.env.PORT || 3001;
 const databaseURL = process.env.DATABASE_URL;
-
 app.use(
     cors({
-    origin: [process.env.ORIGIN],
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-    credentials: true,
+    origin: [process.env.ORIGIN], // Only allow requests from this origin (e.g., frontend at localhost:5173).
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],  // Allow specified HTTP methods.
+    credentials: true,  // Include cookies in cross-origin requests
     })
 );
 app.use("/uploads/profiles", express.static("uploads/profiles"));
 
     app.use(cookieParser());
     app.use(express.json());
+    app.use("/api/contacts",contactsRoutes);
 
 app.use('/api/auth',authRoutes)
 
