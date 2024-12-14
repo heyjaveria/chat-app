@@ -1,10 +1,3 @@
-// const MessageBar = () => {
-//   return (
-//     <div>
-      
-//     </div>
-//   )
-// }
 import { useState } from "react";
 import {GrAttachment} from "react-icons/gr";
 import {RiEmojiStickerLine} from "react-icons/ri";
@@ -12,12 +5,16 @@ import {IoSend} from "react-icons/io5";
 import { useEffect } from "react";
 import { useRef } from "react";
 import EmojiPicker from "emoji-picker-react";
+import { useSocket } from "@/context/SocketContext";
+import { useAppStore } from "@/store";
 
 const MessageBar = () => {
     const emojiRef = useRef();
+    const socket = useSocket();   
+const {selectedChatType,selectedChatData,userInfo} = useAppStore();
     const [ message , setMessage ] = useState("");
     const [ emojiPickerOpen , setEmojiPickerOpen ] = useState(false);
-
+      
     useEffect(() => {
         function handleClickOutsdie(event){
             if(emojiRef.current && !emojiRef.current.contains(event.target)){
@@ -35,7 +32,19 @@ const MessageBar = () => {
     }
 
     const handleSendMessage = async () =>{
-
+        if(selectedChatType === "contact"){
+            if (!socket) {
+                console.error("Socket not initialized");
+                return;
+            }
+            socket.emit("sendMessage",{
+                sender:userInfo.id,
+                content:message,
+                recipient:selectedChatData._id,
+                messageType: "text",
+                fileUrl: undefined,
+            });
+        };
     }
 
     return (
