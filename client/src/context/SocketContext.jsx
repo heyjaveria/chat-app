@@ -14,9 +14,9 @@ export const SocketProvider = ({ children}) => {
 console.log("this is user info",userInfo);
     useEffect ( () => {
         if (userInfo){
-            socket.current = io(HOST,{
-                withCredentials : true,
-                query : {userId: userInfo.id},
+            socket.current = io(HOST,{   
+                withCredentials : true,     
+                 query : {userId: userInfo.id},
             });
 
             socket.current.on("connect" , (message) => {  
@@ -38,7 +38,10 @@ console.log("this is user info",userInfo);
              };
 
              socket.current.on("receiveMessage",handleReceiveMessage);
-
+            //  socket.current.on("receiveMessage",(message)=>{
+            //     handleReceiveMessage(message);
+            //  }
+            //  );
             return() => {
                 if (socket.current) {
                     socket.current.disconnect();

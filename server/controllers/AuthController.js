@@ -1,6 +1,6 @@
 import { compare } from "bcrypt";
 import User from "../models/UserModel.js";
-import jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken";  
 import {renameSync,unlinkSync} from "fs";
 
 // const User = require("../models/UserModel");

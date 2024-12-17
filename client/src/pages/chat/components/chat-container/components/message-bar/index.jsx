@@ -37,6 +37,13 @@ const {selectedChatType,selectedChatData,userInfo} = useAppStore();
                 console.error("Socket not initialized");
                 return;
             }
+            console.log("Sending message:", {
+                sender: userInfo.id,
+                content: message,
+                recipient: selectedChatData._id,
+                messageType: "text",
+                fileUrl: undefined,
+            });
             socket.emit("sendMessage",{
                 sender:userInfo.id,
                 content:message,
