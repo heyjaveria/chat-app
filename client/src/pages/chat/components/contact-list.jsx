@@ -53,7 +53,7 @@ const ContactList = ({contacts,isChannel = false }) => {
                                   ?"bg-[#ffffff22] border border-white/70"
                                   :getColor(contact.color)
                            }
-                            uppercase h-10 w-1 text-lg border-[1px] flex items-center justify-center rounded-full 
+                            uppercase h-10 w-10 text-lg border-[1px] flex items-center justify-center rounded-full 
                            `}
                          > 
                            {contact.firstName ?  
@@ -71,7 +71,7 @@ const ContactList = ({contacts,isChannel = false }) => {
                         {isChannel ? (
                             <span>{contact.name}</span>
                         ): (
-                            <span>{`${contact.firstName} ${contact.lastName}`};</span>
+                            <span>{`${contact.firstName} ${contact.lastName}`}</span>
                         ) 
                     }
                     </div>

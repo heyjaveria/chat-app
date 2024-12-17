@@ -1,4 +1,6 @@
+import mongoose from "mongoose";
 import User from "../models/UserModel.js";
+import Message from "../models/MessagesModel.js";
 export const searchContacts = async(request,response,next) => {
     try{
         const {searchTerm} = request.body;
@@ -19,7 +21,6 @@ export const searchContacts = async(request,response,next) => {
             ],
         });
         return response.status(200).json({ contacts });
-        return response.status(200).send("Logout Successful.");
     }catch(error){
         console.log({error});
         return response.status(500).send("Internal Server Error.");
@@ -31,6 +32,13 @@ export const getContactsForDMList = async(request,response,next) => {
     try{
         let {userId} = request;
         userId = new mongoose.Types.ObjectId(userId);
+        // if (mongoose.Types.ObjectId.isValid(userId)) {
+        //     console.log("valid userId", userId);
+        // }
+
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+            return response.status(400).send("Invalid userId");
+        }
         const contacts = await Message.aggregate([
             { 
                 $match: {
@@ -78,11 +86,29 @@ export const getContactsForDMList = async(request,response,next) => {
                 $sort: {lastMessageTime:-1},
             },
         ]);
-
+        //  console.log("from contacts controller", contacts )
         return response.status(200).json({ contacts });
-        return response.status(200).send("Logout Successful.");
     }catch(error){
         console.log({error});
         return response.status(500).send("Internal Server Error.");
     }
 }
+
+export const getAllContacts = async(request,response,next) => {
+    try{
+        const users = await User.find(
+            { _id: { $ne:request.userId} },
+            "firstName lastName _id email"
+        );
+
+        const contacts = users.map((user) => ({
+            label: user.firstName ? `${user.firstName} ${user.lastName}` : user.email,
+            value: user._id,
+        }));
+
+        return response.status(200).json({ contacts });
+    }catch(error){
+        console.log({error});
+        return response.status(500).send("Internal Server Error.");
+    }
+};

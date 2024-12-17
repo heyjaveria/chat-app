@@ -77,7 +77,8 @@ const NewDm = () => {
             <input
             placeholder="Search Contacts"
             className="rounded-lg p-6 w-full h-12 bg-[#2c2e3b] border-none " 
-            onClick={(e) => searchContacts(e.target.value)}
+            // onClick={(e) => searchContacts(e.target.value)}
+            onChange={(e) => searchContacts(e.target.value)}
             />
         </div>
 {
