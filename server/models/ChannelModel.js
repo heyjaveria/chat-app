@@ -1,12 +1,11 @@
 import mongoose from "mongoose";
-
 const channelSchema = new mongoose.Schema({
     name: {
         type: String,
         required:true,
     },
     members: [{ type:mongoose.Schema.ObjectId, ref:"Users", required:true}],
-    admin: {typtype:mongoose.Schema.ObjectId, ref:"Users", required:true},
+    admin: {type:mongoose.Schema.ObjectId, ref:"Users", required:true},
     messages: [
         {type:mongoose.Schema.ObjectId, ref:"Messages", required:false}
     ],

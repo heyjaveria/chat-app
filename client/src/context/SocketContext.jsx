@@ -20,7 +20,7 @@ console.log("this is user info",userInfo);
             });
 
             socket.current.on("connect" , (message) => {  
-                console.log("Connected to Socket server.")
+                console.log("Connected to Socket server.",message)
             });
 
             const handleReceiveMessage = (message) => {
@@ -37,11 +37,20 @@ console.log("this is user info",userInfo);
                 }
              };
 
+
+             const handleRecieveChannelMessage = (message) => {
+                const {selectedChatData , selectedChatType , addMessage} = useAppStore.getState();
+                        
+                if(
+                    selectedChatType !== undefined &&
+                    (selectedChatData._id === message.channelId)
+                ){
+                    addMessage(message);
+                }
+            }
+             socket.current.on("recieve-channel-message",handleRecieveChannelMessage);
              socket.current.on("receiveMessage",handleReceiveMessage);
-            //  socket.current.on("receiveMessage",(message)=>{
-            //     handleReceiveMessage(message);
-            //  }
-            //  );
+       
             return() => {
                 if (socket.current) {
                     socket.current.disconnect();
