@@ -24,7 +24,7 @@ console.log("this is user info",userInfo);
             });
 
             const handleReceiveMessage = (message) => {
-                const {selectedChatData , selectedChatType , addMessage} = useAppStore.getState();
+                const {selectedChatData , selectedChatType , addMessage,addContactsInDMContacts} = useAppStore.getState();
             
                 if(
                     selectedChatType !== undefined &&
@@ -35,11 +35,12 @@ console.log("this is user info",userInfo);
                     console.log("message receive",message);
                     addMessage(message);
                 }
+                addContactsInDMContacts();
              };
 
 
              const handleRecieveChannelMessage = (message) => {
-                const {selectedChatData , selectedChatType , addMessage} = useAppStore.getState();
+                const {selectedChatData , selectedChatType , addMessage,addChannelInChannelList} = useAppStore.getState();
                         
                 if(
                     selectedChatType !== undefined &&
@@ -47,6 +48,7 @@ console.log("this is user info",userInfo);
                 ){
                     addMessage(message);
                 }
+                addChannelInChannelList(message);
             }
              socket.current.on("recieve-channel-message",handleRecieveChannelMessage);
              socket.current.on("receiveMessage",handleReceiveMessage);

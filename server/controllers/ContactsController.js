@@ -8,7 +8,7 @@ export const searchContacts = async(request,response,next) => {
             return response.status(400).send("searchTerm is required.");
         } 
         const sanitizedSearchTerm = searchTerm.replace(
-            /[.*+?^${}()|[\]\\]/g,
+            /[.*+?^${}()|[\]\\]/g,    
             "\\$&"
         );
         const regex = new RegExp(sanitizedSearchTerm,"i");
@@ -18,14 +18,14 @@ export const searchContacts = async(request,response,next) => {
             {
                $or: [{firstName:regex},{lastName:regex},{email:regex}],
             },
-            ],
-        });
+            ],   
+        });  
         return response.status(200).json({ contacts });
-    }catch(error){
+    }catch(error){  
         console.log({error});
         return response.status(500).send("Internal Server Error.");
     }
-};
+};   
 
 
 export const getContactsForDMList = async(request,response,next) => {

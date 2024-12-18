@@ -1,6 +1,6 @@
 import { apiClient } from "@/lib/api-client";
 import { useAppStore } from "@/store";
-import { GET_ALL_MESSAGES_ROUTE, HOST } from "@/utils/constants";
+import { GET_ALL_MESSAGES_ROUTE, GET_CHANNEL_MESSAGES, HOST } from "@/utils/constants";
 import moment from "moment";
 import { useRef } from "react";
 import { useEffect } from "react";
@@ -8,7 +8,8 @@ import {MdFolderZip} from "react-icons/md";
 import {IoMdArrowRoundDown} from "react-icons/io";
 import { IoCloseSharp } from "react-icons/io5";
 import { useState } from "react";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { getColor } from "@/lib/utils";
 
 const  MessageContainer = () => {
   const scrollRef = useRef();
@@ -36,8 +37,22 @@ const  MessageContainer = () => {
               console.log({error});
           }
       };
+      const getChannelMessages = async () =>{
+        try{
+            const response = await apiClient.get(
+                `${GET_CHANNEL_MESSAGES}/${selectedChatData._id}`,
+                {withCredentials:true},
+            );
+            if(response.data.messages){
+                setSelectedChatMessages(response.data.messages);
+            }
+        }catch(error){
+            console.log({error});
+        }
+    };
       if(selectedChatData._id){
           if(selectedChatType === "contact" ) getMessages();
+          else if(selectedChatType === "channel") getChannelMessages();
       }
   }, [
       selectedChatData,
@@ -205,14 +220,14 @@ const downloadFile = async(url) => {
                      className="object-cover w-full h-full bg-black"
                    />
                  )}
-                <AvatarFallBack
+                <AvatarFallback
                 className={`uppercase h-8 w-8 text-lg flex items-center justify-center rounded-full ${getColor( message.sender.color)}`}>
                     { 
                        message.sender.firstName
                        ?message.sender.firstName.split("").shift()
                        :message.sender.email.split("").shift()
                     }
-                </AvatarFallBack>
+                </AvatarFallback>
              </Avatar>
              <span className="text-sm text-white/60">{`${message.sender.firstName} ${message.sender.lastName}`}</span>
              <span className="text-xs text-white/60">
@@ -242,7 +257,7 @@ const downloadFile = async(url) => {
             src={`${HOST}/${imageURL}`}
             className="h-[80vh] w-full bg-cover"
             />            
-        </div>
+        </div>   
         <div className="flex gap-5 top-0 mt-5">
             <button className="bg-black/20 p-3 text-2xl rounded-full hover:bg-black/50 cursor-pointer transition-all duration-300" 
             onClick={()=> downloadFile(imageURL)}>
