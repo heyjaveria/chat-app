@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import {renameSync,unlinkSync} from "fs";
 
 // const User = require("../models/UserModel");
-// const { sign } = require("jsonwebtoken");
+// const { sign } = require("jsonwebtoken");  
 
 const maxAge = 3 * 24 * 60 * 60 * 1000;
 const createToken = (email, userId) => {
@@ -147,7 +147,7 @@ export const login = async (request, response, next)=> {
              return response.status(400).send("File is required");   
             }
             const date = Date.now();
-            let fileName ="uploads/profiles" +date +request.file.originalname;
+            let fileName ="uploads/profiles/" +date +request.file.originalname;
             renameSync(request.file.path, fileName);
             const updatedUser = await User.findByIdAndUpdate(
                 request.userId,

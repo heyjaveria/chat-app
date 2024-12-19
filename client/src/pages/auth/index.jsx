@@ -1,4 +1,6 @@
-import Background from "@/assets/login2.png";
+// import Background from "@/assets/login2.png";
+// import Background from "@/assets/loginnn.jpg";
+import Background from "@/assets/yy.png";
 import Victory from "@/assets/victory.svg";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,7 +9,7 @@ import { apiClient } from "@/lib/api-client";
 import { useAppStore } from "@/store";
 import { LOGIN_ROUTE, SIGNUP_ROUTE } from "@/utils/constants";
 import { TabsContent, TabsTrigger } from "@radix-ui/react-tabs";
-// import { data } from "autoprefixer";
+
 import { useState } from "react"; 
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -76,15 +78,21 @@ const validateSignup = ()=>  {
             setUserInfo(response.data.user)
             navigate("/profile");
         }
-            console.log("this is response",{ response });
+            // console.log("this is response",{ response });
 
             };
             
     };
 return (
-<div className="h-[100vh] w-[100vw] flex items-center
+
+// {/* <div className="h-[100vh] w-[100vw] flex items-center
+// justify-center">
+// <div className="h-[80vh] border-2 border-white     */}
+
+
+<div className="h-full w-[100vw] flex items-center
 justify-center">
-<div className="h-[80vh] bg-white border-2 border-white
+<div className="h-[80%] bg-white border-2 border-white
 text-opacity-90 shadow-2xl w-[80vw] md:w-[90vw] lg:w-[70vw] xl:w-[60vw] rounded-3xl grid xl:grid-cols-2">
 <div className="flex flex-col gap-10 items-center
 justify-center">
@@ -163,6 +171,7 @@ Signup
 </div>
 <div className="hidden xl:flex justify-center items-center">
 <img src={Background} alt="background login" className="h-[700px]"/>
+
 </div>
 </div>
 </div>

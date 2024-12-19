@@ -8,9 +8,7 @@ import contactsRoutes from "./routes/ContactRoutes.js";
 import setupSocket from "./socket.js";
 import messagesRoutes from "./routes/MessagesRoutes.js";
 import channelRoutes from "./routes/ChannelRoutes.js" 
-// import { userInfo } from "os";
-// import { userInfo } from "os";
-// import { create } from "domain"
+
 
 // This loads variables from a .env file into process.env
 dotenv.config();
@@ -25,6 +23,7 @@ app.use(
     credentials: true,  // Include cookies in cross-origin requests
     })
 );
+
 app.use("/uploads/profiles", express.static("uploads/profiles"));
 app.use("/uploads/files", express.static("uploads/files"))
     app.use(cookieParser());
