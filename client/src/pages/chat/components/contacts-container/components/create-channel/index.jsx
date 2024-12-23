@@ -10,7 +10,6 @@ import {
   } from "@/components/ui/dialog"
 import { apiClient } from "@/lib/api-client";
 import { useEffect } from "react";
-// import { useAppStore } from "@/store";
 import { CREATE_CHANNEL_ROUTE, GET_ALL_CONTACTS_ROUTES } from "@/utils/constants";
 import MultipleSelector from "@/components/ui/multipleselect";
 import { useAppStore } from "@/store";
@@ -24,7 +23,7 @@ const CreateChannel = () => {
     const [channelName,setChannelName] = useState("");
 
     useEffect(()=>{
-        const getData = async() => {
+        const getData = async() => { 
             const response=await apiClient.get(GET_ALL_CONTACTS_ROUTES,{
                 withCredentials:true,
             });
@@ -44,7 +43,7 @@ const CreateChannel = () => {
                 if(response.staus===201){
                     setChannelName("");
                     setSelectedContacts([]);
-                    setNewChannelModal(false);            //jidr or ye channelmodal ara h spellings verify krlyna
+                    setNewChannelModal(false);             
                     addChannel(response.data.channel);
                 }
             }

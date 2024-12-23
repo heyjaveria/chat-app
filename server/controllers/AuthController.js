@@ -26,8 +26,7 @@ response.cookie("jwt", createToken (email,user.id),{
 return response.status(201).json({
     user:{
     id: user.id,
-    email: user.email,
-    // firstName: user.firstName
+    email: user.email, 
 profileSetup: user.profileSetup,
 },
 });
