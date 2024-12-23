@@ -18,7 +18,7 @@ const port = process.env.PORT || 3001;
 const databaseURL = process.env.DATABASE_URL;
 app.use(
     cors({
-        origin: ["https://webbased-mern-chat-app-frontend.vercel.app"],
+        origin: ["https://chat-app-frontend-rho-ruby.vercel.app"],
     // origin: [process.env.ORIGIN], // Only allow requests from this origin (e.g., frontend at localhost:5173).
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],  // Allow specified HTTP methods.
     credentials: true,  // Include cookies in cross-origin requests
